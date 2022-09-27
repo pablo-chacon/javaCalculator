@@ -16,30 +16,27 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) {
 
-        double num1, num2;
-
-        //Keep while loop running.
+        //Global vars.
         boolean runProgram = true;
         Equations equation = new Equations();
+        HashMap<String, Double> memory = new HashMap<>();
 
         //While loop to keep program running.
         while (runProgram) {
             //Vars within running program.
-            double result = 0;
-            String formula = null;
-            HashMap<String, Double> memory = new HashMap<>();
+            double num1, num2;
+            double result;
+            String formula;
             Scanner input = new Scanner(System.in);
-
             //Menu
             System.out.print("""
-                    \n<<<<<<<<<<<<<<<<<>>>>>>
+                    \n>>>>>> *** <<<<<<
                      Simple calculator.
                      Operations: +, -, *, /
                      Check history: h
                      Exit program: q 
                      Calculate stuff? y/n
-                    <<<<<<<<<<<<<<<<<>>>>>>> 
-                    """);
+                    >>>>>>> """);
             /*
             If statement for decisions. The calculator calls method by operator
             evaluated in enhanced switch statement.
@@ -47,7 +44,7 @@ public class Main {
 
             String action = input.next();
 
-            if (action.equals('y')) {
+            if (action.equals("y")) {
 
                 System.out.println("Input number:\n>");
                 num1 = equation.getNum1(input.nextDouble());
@@ -57,45 +54,46 @@ public class Main {
 
                 System.out.print("Input number:\n> ");
                 num2 = equation.getNum2(input.nextDouble());
-                formula = num1 + operation + num2;
+                formula = num1 + " " + operation + " " + num2 + " ";
                 // Call operation methods by input.
                 switch (operation.charAt(0)) {
-
                     case '+' -> {
                         // Calls Addition method with num1, num2 as parameters
                         result = equation.Addition(num1, num2);
                         memory.put(formula, result);
-                        System.out.println(result);
+                        System.out.println(memory);
                     }
                     case '-' -> {
                         // Subtraction
                         result = equation.Subtraction(num1, num2);
                         memory.put(formula, result);
-                        System.out.print(result);
-
+                        System.out.print(memory);
                     }
                     // Multiplication
                     case '*' -> {
                         result = equation.Multiplication(num1, num2);
                         memory.put(formula, result);
-                        System.out.print(result);
+                        System.out.print(memory);
                     }
                     // Division
                     case '/' -> {
                         result = equation.Division(num1, num2);
                         memory.put(formula, result);
-                        System.out.print(result);
+                        System.out.print(memory);
                     }
                     // Error handling
                     default -> {
                         System.out.println("Invalid input! Try again.");
                     }
                 }
+            } else if (action.equals("h")) {
+                /*Outputs the memory contents. Coming features: Search by result, by formula,
+                iterate through memory values and operand by next value.
+                for (int i = 0; i <= memory.size(); i++) {}
+                */
+                System.out.println(memory);
 
-            } else if (input.hasNext("h")) {
-                        System.out.println(memory);
-
-            } else if (input.hasNext("q")) {
+            } else if (action.equals("q")) {
                 // if true: print exit message, Close Scanner, break while loop.
                 System.out.println("Exiting. Bye.");
                 input.close();
@@ -103,7 +101,6 @@ public class Main {
             } else {
                 System.out.println("Invalid input! Try again.");
             }
-
         }
     }
 }
