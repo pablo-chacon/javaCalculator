@@ -18,15 +18,13 @@ public class Main {
 
         //Global vars.
         boolean runProgram = true;
-        Equations equation = new Equations();
+
         HashMap<String, Double> memory = new HashMap<>();
 
         //While loop to keep program running.
         while (runProgram) {
+
             //Vars within running program.
-            double num1, num2;
-            double result;
-            String formula;
             Scanner input = new Scanner(System.in);
             //Menu
             System.out.print("""
@@ -35,7 +33,7 @@ public class Main {
                      Operations: +, -, *, /
                      Check history: h
                      Exit program: q 
-                     Calculate stuff? y/n
+                     Start: y/n
                     >>>>>>> """);
             /*
             If statement for decisions. The calculator calls method by operator
@@ -47,38 +45,39 @@ public class Main {
             if (action.equals("y")) {
 
                 System.out.println("Input number:\n>");
-                num1 = equation.getNum1(input.nextDouble());
+                double num1 = Formula.getNum1(input.nextDouble());
 
                 System.out.print("Operation:\n +, -, *, /\n>");
-                String operation = input.next();
+                String operation = Formula.getOperator(input.next());
 
                 System.out.print("Input number:\n> ");
-                num2 = equation.getNum2(input.nextDouble());
-                formula = num1 + " " + operation + " " + num2 + " ";
+                double num2 = Equations.getNum2(input.nextDouble());
+                String newFormula = num1 + " " + operation + " " + num2 + " ";
                 // Call operation methods by input.
+                double result;
                 switch (operation.charAt(0)) {
                     case '+' -> {
                         // Calls Addition method with num1, num2 as parameters
-                        result = equation.Addition(num1, num2);
-                        memory.put(formula, result);
+                        result = Equations.Addition(num1, num2);
+                        memory.put(newFormula, result);
                         System.out.println(memory);
                     }
                     case '-' -> {
                         // Subtraction
-                        result = equation.Subtraction(num1, num2);
-                        memory.put(formula, result);
+                        result = Equations.Subtraction(num1, num2);
+                        memory.put(newFormula, result);
                         System.out.print(memory);
                     }
                     // Multiplication
                     case '*' -> {
-                        result = equation.Multiplication(num1, num2);
-                        memory.put(formula, result);
+                        result = Equations.Multiplication(num1, num2);
+                        memory.put(newFormula, result);
                         System.out.print(memory);
                     }
                     // Division
                     case '/' -> {
-                        result = equation.Division(num1, num2);
-                        memory.put(formula, result);
+                        result = Equations.Division(num1, num2);
+                        memory.put(newFormula, result);
                         System.out.print(memory);
                     }
                     // Error handling
@@ -87,11 +86,11 @@ public class Main {
                     }
                 }
             } else if (action.equals("h")) {
-                /*Outputs the memory contents. Coming features: Search by result, by formula,
-                iterate through memory values and operand by next value.
-                for (int i = 0; i <= memory.size(); i++) {}
-                */
-                System.out.println(memory);
+                /*Outputs the memory contents. Coming features: Search by result, by newFormula,
+                iterate through memory values and operand by next value.*/
+                for (int i = 0; i <= memory.size(); i++) {
+                    System.out.println(memory.values());
+                }
 
             } else if (action.equals("q")) {
                 // if true: print exit message, Close Scanner, break while loop.
