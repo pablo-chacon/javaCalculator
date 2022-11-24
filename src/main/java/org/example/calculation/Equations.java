@@ -1,4 +1,4 @@
-package org.example;
+package org.example.calculation;
 
 public class Equations extends Formula {
 
